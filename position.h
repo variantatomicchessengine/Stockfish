@@ -229,6 +229,7 @@ public:
   Eval::theoryItem* lookUpTheory() const;
   int goodForWhite() const;
   int goodForBlack() const;
+  int storedPly() const;
 
 private:
   // Initialization helpers (used while setting up a position)

@@ -30,6 +30,7 @@
 #include "position.h"
 #include "types.h"
 
+
 namespace Search {
 
 /// Stack struct keeps track of the information we need to remember from nodes
@@ -104,6 +105,7 @@ extern StateStackPtr SetupStates;
 void init();
 void clear();
 template<bool Root = true> uint64_t perft(Position& pos, Depth depth);
+extern void printBookMoves(Position& pos,bool asUciBestmove);
 
 } // namespace Search
 

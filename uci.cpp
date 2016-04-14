@@ -108,6 +108,13 @@ void setvariant(Position& pos)
 #endif
 }
 
+  // print position
+void printPosition(Position& pos)
+{
+  std::cout << pos << std::endl;
+  Search::printBookMoves(pos,false);
+}
+
   // position() is called when engine receives the "position" UCI command.
   // The function sets up the position described in the given FEN string ("fen")
   // or the starting position ("startpos") and then makes the moves given in the
@@ -306,14 +313,24 @@ void UCI::loop(int argc, char* argv[]) {
           Time.availableNodes = 0;
       }
       else if (token == "isready")    sync_cout << "readyok" << sync_endl;
-      else if (token == "go")         go(pos, is);
+      else if (token == "go")
+      {
+        if(Options["Use Book"]==1)
+        {
+          Search::printBookMoves(pos,true);
+        }
+        else
+        {
+          go(pos, is);
+        }
+      }
       else if (token == "position")   position(pos, is);
       else if (token == "setoption")  setoption(is,pos);
 
       // Additional custom non-UCI commands, useful for debugging
       else if (token == "flip")       pos.flip();
       else if (token == "bench")      benchmark(pos, is);
-      else if (token == "p")          sync_cout << pos << sync_endl;
+      else if (token == "p")          printPosition(pos);
       else if (token == "eval")       sync_cout << Eval::trace(pos) << sync_endl;
       else if (token == "perft")
       {
@@ -333,7 +350,7 @@ void UCI::loop(int argc, char* argv[]) {
       else if (token == "r")
       {
           setvariant(pos);
-          sync_cout << pos << sync_endl;
+          printPosition(pos);
       }
       else if (token == "x")
       {
@@ -364,7 +381,7 @@ void UCI::loop(int argc, char* argv[]) {
             Eval::theoryItems[tk].goodForBlack = 0;
           }
 
-          sync_cout << pos << sync_endl;
+          printPosition(pos);
 
         } else if(!force) {
           sync_cout << "collision" << sync_endl;
@@ -384,7 +401,7 @@ void UCI::loop(int argc, char* argv[]) {
           Move m=game[gameptr];
           --gameptr;
           pos.undo_move(m);
-          sync_cout << pos << sync_endl;
+          printPosition(pos);
         } else {
           sync_cout << "no move to delete" << sync_endl;
         }
@@ -397,7 +414,7 @@ void UCI::loop(int argc, char* argv[]) {
         game[gameptr]=m;
         SetupStates->push(StateInfo());
         pos.do_move(m, SetupStates->top(), pos.gives_check(m, CheckInfo(pos)));
-        sync_cout << pos << sync_endl;
+        printPosition(pos);
       }
       else
           sync_cout << "Unknown command: " << cmd << sync_endl;

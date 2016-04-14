@@ -220,6 +220,34 @@ void Search::clear() {
 }
 
 
+void Search::printBookMoves(Position& pos,bool asUciBestmove) {
+
+  StateInfo st;
+  CheckInfo ci(pos);
+
+  Color sideToMove=pos.side_to_move();
+
+  for (const auto& m : MoveList<LEGAL>(pos))
+  {
+      pos.do_move(m, st, pos.gives_check(m, ci));
+      int goodForWhite=pos.goodForWhite();
+      int goodForBlack=pos.goodForBlack();
+      if(asUciBestmove)
+      {
+        if(((sideToMove==WHITE)&&(goodForWhite>0))||((sideToMove==BLACK)&&(goodForBlack>0)))
+        {
+          sync_cout << "info depth 0 score cp 0 nodes 0 nps 0" << sync_endl;
+          sync_cout << "bestmove " << UCI::move(m, pos.is_chess960()) << sync_endl;
+        }
+      } else if((goodForWhite!=0)||(goodForBlack!=0))
+      {
+        std::cout << UCI::move(m, pos.is_chess960()) << " ( " << goodForWhite << " , " << goodForBlack << " )" << std::endl;
+      }
+      pos.undo_move(m);
+  }
+
+}
+
 /// Search::perft() is our utility to verify move generation. All the leaf nodes
 /// up to the given depth are generated and counted, and the sum is returned.
 template<bool Root>

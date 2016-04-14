@@ -34,6 +34,8 @@
 
 #include <iostream>
 
+#include "search.h"
+
 using std::string;
 
 Value PieceValue[PHASE_NB][PIECE_NB] = {
@@ -147,7 +149,7 @@ std::ostream& operator<<(std::ostream& os, const Position& pos) {
 
   os
   << "\nFen: " << pos.fen()
-  << "\nKey: " << Eval::uint64_t_to_string(pos.key())
+  << "\nKey: " << Eval::uint64_t_to_string(pos.key()) << " ( stored ply " << pos.storedPly() << " )"
   << "\nGood for white: " << pos.goodForWhite()
   << "\nGood for black: " << pos.goodForBlack();
   /*<< "\nCheckers: ";
@@ -157,7 +159,6 @@ std::ostream& operator<<(std::ostream& os, const Position& pos) {
 
   return os;
 }
-
 
 /// Position::init() initializes at startup the various arrays used to compute
 /// hash keys.
@@ -1740,3 +1741,10 @@ int Position::goodForBlack() const {
   if(tip != nullptr ) return tip -> goodForBlack;
   return 0;
 }
+
+int Position::storedPly() const {
+  Eval::theoryItem* tip=lookUpTheory();
+  if(tip != nullptr ) return tip -> ply;
+  return 0;
+}
+
