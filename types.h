@@ -30,6 +30,18 @@
 #define RACE_VARIANT 1 << 6
 #define THREECHECK_VARIANT 1 << 7
 
+#define ATOMIC_ONLY
+
+#ifdef ATOMIC_ONLY
+	#undef STANDARD
+	#undef CHESS960
+	#undef HORDE
+	#undef HOUSE
+	#undef KOTH
+	#undef RACE
+	#undef THREECHECK
+#endif
+
 /// When compiling with provided Makefile (e.g. for Linux and OSX), configuration
 /// is done automatically. To get started type 'make help'.
 ///

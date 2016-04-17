@@ -180,7 +180,7 @@ void printPosition(Position& pos)
   // setoption() is called when engine receives the "setoption" UCI command. The
   // function updates the UCI option ("name") to the given value ("value").
 
-  void setoption(istringstream& is, Position& pos) {
+  void setoption(istringstream& is) {
 
     string token, name, value;
     is >> token; // Consume "name" token
@@ -203,7 +203,6 @@ void printPosition(Position& pos)
         {
           THEORY_BONUS=stoi(token);
         }
-        setvariant(pos);
     }
     else
         sync_cout << "No such option: " << name << sync_endl;
@@ -326,7 +325,7 @@ void UCI::loop(int argc, char* argv[]) {
     	}
       }
       else if (token == "position")   position(pos, is);
-      else if (token == "setoption")  setoption(is,pos);
+      else if (token == "setoption")  setoption(is);
 
       // Additional custom non-UCI commands, useful for debugging
       else if (token == "flip")       pos.flip();

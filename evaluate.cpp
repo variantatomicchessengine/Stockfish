@@ -1208,6 +1208,7 @@ namespace Eval {
         theoryItems[index].ply=ply;
       }
       myfile.close();
+      std::cout << "theory loaded" << std::endl;
     }
   }
 

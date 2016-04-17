@@ -880,8 +880,6 @@ bool Position::gives_check(Move m, const CheckInfo& ci) const {
 #ifdef ATOMIC
   if (is_atomic())
   {
-      if (is_horde() && ci.ksq == SQ_NONE)
-          return false;
       // If kings are adjacent, there is no check
       // If kings were adjacent, there may be direct checks
       if (type_of(piece_on(from)) == KING)

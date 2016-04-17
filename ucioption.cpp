@@ -31,6 +31,8 @@
 
 #include "evaluate.h"
 
+#include "types.h"
+
 using std::string;
 
 UCI::OptionsMap Options; // Global object
@@ -59,28 +61,32 @@ void init(OptionsMap& o) {
 
   const int MaxHashMB = Is64Bit ? 1024 * 1024 : 2048;
 
-  o["Write Debug Log"]       << Option(false, on_logger);
-  o["Contempt"]              << Option(0, -100, 100);
-  o["Threads"]               << Option(1, 1, 128, on_threads);
-  o["Hash"]                  << Option(16, 1, MaxHashMB, on_hash_size);
-  o["Clear Hash"]            << Option(on_clear_hash);
-  o["Ponder"]                << Option(false);
-  o["MultiPV"]               << Option(3, 1, 500);
-  o["Skill Level"]           << Option(20, 0, 20);
-  o["Move Overhead"]         << Option(30, 0, 5000);
-  o["Minimum Thinking Time"] << Option(20, 0, 5000);
-  o["Slow Mover"]            << Option(89, 10, 1000);
-  o["nodestime"]             << Option(0, 0, 10000);
-  o["Use Book"]              << Option(false);
-  o["UCI_Chess960"]          << Option(false);
 #ifdef ATOMIC
-  o["UCI_Atomic"]            << Option(true);
+  o["Use Book"]              << Option(false);
+  o["Clear Hash"]            << Option(on_clear_hash);
   o["THEORY_BONUS"]          << Option(THEORY_BONUS,0,100);
   o["ATOMIC_PAWN_BONUS"]     << Option(ATOMIC_PAWN_BONUS,-1500,1500);
   o["ATOMIC_QUEEN_BONUS"]    << Option(ATOMIC_QUEEN_BONUS,-2000,2000);
   o["ATOMIC_MOBILITY_BONUS"] << Option(ATOMIC_MOBILITY_BONUS,0,100);
   o["ATOMIC_KING_ATTACK_BONUS"] << Option(ATOMIC_KING_ATTACK_BONUS,0,100);
+  o["MultiPV"]               << Option(3, 1, 500);
+  o["Threads"]               << Option(1, 1, 128, on_threads);
+  o["UCI_Atomic"]            << Option(true);
 #endif
+
+  o["Write Debug Log"]       << Option(false, on_logger);
+  o["Contempt"]              << Option(0, -100, 100);
+  o["Hash"]                  << Option(16, 1, MaxHashMB, on_hash_size);
+  o["Ponder"]                << Option(false);
+  o["Skill Level"]           << Option(20, 0, 20);
+  o["Move Overhead"]         << Option(30, 0, 5000);
+  o["Minimum Thinking Time"] << Option(20, 0, 5000);
+  o["Slow Mover"]            << Option(89, 10, 1000);
+  o["nodestime"]             << Option(0, 0, 10000);
+
+
+  o["UCI_Chess960"]          << Option(false);
+
 #ifdef HORDE
   o["UCI_Horde"]             << Option(false);
 #endif
@@ -96,10 +102,12 @@ void init(OptionsMap& o) {
 #ifdef THREECHECK
   o["UCI_3Check"]            << Option(false);
 #endif
+
   o["SyzygyPath"]            << Option("<empty>", on_tb_path);
   o["SyzygyProbeDepth"]      << Option(1, 1, 100);
   o["Syzygy50MoveRule"]      << Option(true);
   o["SyzygyProbeLimit"]      << Option(6, 0, 6);
+
 }
 
 
