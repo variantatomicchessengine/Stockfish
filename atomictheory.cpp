@@ -82,6 +82,10 @@ namespace Eval {
 		atomictheoryItems[195712].goodForWhite=0;
 		atomictheoryItems[195712].goodForBlack=20;
 		atomictheoryItems[195712].ply=16;
+		atomictheoryItems[203410].key=5236677942088768146ULL;
+		atomictheoryItems[203410].goodForWhite=0;
+		atomictheoryItems[203410].goodForBlack=20;
+		atomictheoryItems[203410].ply=26;
 		atomictheoryItems[213801].key=13029772240215032617ULL;
 		atomictheoryItems[213801].goodForWhite=20;
 		atomictheoryItems[213801].goodForBlack=0;
@@ -130,6 +134,10 @@ namespace Eval {
 		atomictheoryItems[415079].goodForWhite=0;
 		atomictheoryItems[415079].goodForBlack=20;
 		atomictheoryItems[415079].ply=20;
+		atomictheoryItems[431563].key=12536726705287894475ULL;
+		atomictheoryItems[431563].goodForWhite=0;
+		atomictheoryItems[431563].goodForBlack=20;
+		atomictheoryItems[431563].ply=26;
 		atomictheoryItems[449311].key=11203856656883964703ULL;
 		atomictheoryItems[449311].goodForWhite=0;
 		atomictheoryItems[449311].goodForBlack=20;

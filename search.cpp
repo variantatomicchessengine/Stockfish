@@ -236,6 +236,18 @@ bool Search::printBookMoves(Position& pos,bool asUciBestmove) {
       int goodForBlack=pos.goodForBlack();
       if(asUciBestmove)
       {
+#ifdef ATOMIC
+        if(pos.is_atomic())
+        {
+          uint64_t tk=pos.key() & Eval::THEORY_MASK;
+          Eval::theoryItem ti=Eval::atomictheoryItems[tk];
+          if(ti.key==pos.key())
+          {
+            goodForWhite=ti.goodForWhite;
+            goodForBlack=ti.goodForBlack;
+          }
+        }
+#endif
         if(((sideToMove==WHITE)&&(goodForWhite>0))||((sideToMove==BLACK)&&(goodForBlack>0)))
         {
           std::string bestmove=UCI::move(m, pos.is_chess960());
