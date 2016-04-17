@@ -105,7 +105,7 @@ extern StateStackPtr SetupStates;
 void init();
 void clear();
 template<bool Root = true> uint64_t perft(Position& pos, Depth depth);
-extern void printBookMoves(Position& pos,bool asUciBestmove);
+extern bool printBookMoves(Position& pos,bool asUciBestmove);
 
 } // namespace Search
 

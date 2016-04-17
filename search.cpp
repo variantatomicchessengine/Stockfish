@@ -36,6 +36,8 @@
 #include "uci.h"
 #include "syzygy/tbprobe.h"
 
+#include <string>
+
 namespace Search {
 
   SignalsType Signals;
@@ -220,7 +222,7 @@ void Search::clear() {
 }
 
 
-void Search::printBookMoves(Position& pos,bool asUciBestmove) {
+bool Search::printBookMoves(Position& pos,bool asUciBestmove) {
 
   StateInfo st;
   CheckInfo ci(pos);
@@ -236,8 +238,11 @@ void Search::printBookMoves(Position& pos,bool asUciBestmove) {
       {
         if(((sideToMove==WHITE)&&(goodForWhite>0))||((sideToMove==BLACK)&&(goodForBlack>0)))
         {
-          sync_cout << "info depth 0 score cp 0 nodes 0 nps 0" << sync_endl;
-          sync_cout << "bestmove " << UCI::move(m, pos.is_chess960()) << sync_endl;
+          std::string bestmove=UCI::move(m, pos.is_chess960());
+          sync_cout << "info depth 0 score cp 0 nodes 0 nps 0 pv " << bestmove << sync_endl;
+          sync_cout << "bestmove " << bestmove << sync_endl;
+          pos.undo_move(m);
+          return true;
         }
       } else if((goodForWhite!=0)||(goodForBlack!=0))
       {
@@ -246,6 +251,7 @@ void Search::printBookMoves(Position& pos,bool asUciBestmove) {
       pos.undo_move(m);
   }
 
+  return false;
 }
 
 /// Search::perft() is our utility to verify move generation. All the leaf nodes

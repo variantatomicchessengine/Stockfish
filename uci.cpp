@@ -317,12 +317,13 @@ void UCI::loop(int argc, char* argv[]) {
       {
         if(Options["Use Book"]==1)
         {
-          Search::printBookMoves(pos,true);
-        }
-        else
-        {
-          go(pos, is);
-        }
+        	if(!Search::printBookMoves(pos,true))
+        	{
+        		go(pos, is);
+        	}
+        } else {
+        	go(pos, is);
+    	}
       }
       else if (token == "position")   position(pos, is);
       else if (token == "setoption")  setoption(is,pos);
